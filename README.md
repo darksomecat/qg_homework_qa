@@ -1,3 +1,4 @@
-# qg_homework_qa
+# Новый заголовок
 Hello QA.guru
-# Хорошего дня
+# Пока!
+Hello
