@@ -31,7 +31,7 @@ public class JUnitExamplesTests {
 
     @Test
     void firstTest(){
-        System.out.println("-firstTest");
+        System.out.println("-firstmMyTest");
     }
     @Test
     void secondTest(){
