@@ -15,13 +15,13 @@ public class TextBoxTests extends TestBase {
       open("/text-box.html");
       $("[id=userName]").setValue("Anna Ukolova");
       $("[id=userEmail]").setValue("anna@mailzz.ru");
-      $("[id=currentAddress]").setValue("ул.Пушкина");
+      $("[id=currentAddress]").setValue("ул.Пушкина д2");
       $("[id=permanentAddress]").setValue("ул.Колотушкина");
       $("[id=submit]").click();
 
       $("[id=output] [id=name]").shouldHave(text("Anna Ukolova"));
       $("[id=output] [id=email]").shouldHave(text("anna@mailzz.ru"));
-      $("[id=output] [id=currentAddress]").shouldHave(text("ул.Пушкина"));
+      $("[id=output] [id=currentAddress]").shouldHave(text("ул.Пушкина д2"));
       $("[id=output] [id=permanentAddress]").shouldHave(text("ул.Колотушкина"));
    }
 }
