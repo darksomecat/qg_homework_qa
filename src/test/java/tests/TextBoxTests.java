@@ -1,17 +1,18 @@
 package tests;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import tests.examples.TestBase;
+//import org.openqa.selenium.chrome.ChromeOptions;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class TextBoxTests {
-  @Test
+public class TextBoxTests extends TestBase {
 
+  @Test
     void successfullFillFormTest(){
-      open("https://qa-guru.github.io/one-page-form/text-box.html");
+      open("/text-box.html");
       $("[id=userName]").setValue("Anna Ukolova");
       $("[id=userEmail]").setValue("anna@mailzz.ru");
       $("[id=currentAddress]").setValue("ул.Пушкина");
@@ -22,8 +23,5 @@ public class TextBoxTests {
       $("[id=output] [id=email]").shouldHave(text("anna@mailzz.ru"));
       $("[id=output] [id=currentAddress]").shouldHave(text("ул.Пушкина"));
       $("[id=output] [id=permanentAddress]").shouldHave(text("ул.Колотушкина"));
-
-
-  }
-
+   }
 }
