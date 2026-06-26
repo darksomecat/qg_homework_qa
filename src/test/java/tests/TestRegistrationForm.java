@@ -17,7 +17,7 @@ public class TestRegistrationForm extends TestBase {
         $(byId("firstName")).setValue("Anna");
         $(byId("lastName")).setValue("Ukolova");
         $(byId("userEmail")).setValue("darksomecat@gmails.com");
-        $(byId("gender-radio-3")).click();
+        $("[id=genterWrapper]").$(byText("Other")).click();
         $(byId("userNumber")).setValue("8123456789");
         $(byId("dateOfBirthInput")).click();
         $(byClassName("react-datepicker__month-select")).selectOption(11);
@@ -25,8 +25,8 @@ public class TestRegistrationForm extends TestBase {
         $(".react-datepicker__day.react-datepicker__day--002").click();
         $(byId("subjectsInput")).setValue("Science");
         $(byId("subjectsDropdown")).click();
-        $(byId("hobbies-checkbox-3")).click();
-        $("[id=uploadPicture]").uploadFile(picture);
+        $("[id=hobbiesWrapper]").$(byText("Music")).click();
+        $("[id=uploadPicture]").uploadFromClasspath("images.jpeg");
         $(byId("currentAddress")).setValue("My address");
         $(byId("state")).click();
         $("[id=stateCity-wrapper]").$(byText("NCR")).click();
@@ -54,7 +54,7 @@ public class TestRegistrationForm extends TestBase {
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
         $(byId("firstName")).setValue("Anna");
         $(byId("lastName")).setValue("Ukolova");
-        $(byId("gender-radio-2")).click();
+        $("[id=genterWrapper]").$(byText("Other")).click();
         $(byId("userNumber")).setValue("8123456789");
         $(byId("submit")).click();
         //проверка результата заполнения формы
@@ -73,7 +73,7 @@ public class TestRegistrationForm extends TestBase {
     }
 
     @Test
-    void verifyEmptyFormValidation() { //проверка по нажатию на кнопку в пустой форме
+    void verifyEmptyFormValidationTest() { //проверка по нажатию на кнопку в пустой форме
          open("/automation-practice-form.html");
          $("[aria-label=Close]").click(); //закрытие всплывающего окна
          $(byId("submit")).click();
@@ -81,34 +81,34 @@ public class TestRegistrationForm extends TestBase {
          $("[id=formError]").shouldHave(text("Please fill required fields and enter a valid 10-digit mobile number."));
 }
     @Test
-    void verifyNumberValidation() { //проверка на 9 символов в номере
+    void verifyNumberValidationTest() { //проверка на 9 символов в номере
         open("/automation-practice-form.html");
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
         $(byId("firstName")).setValue("Anna");
         $(byId("lastName")).setValue("Ukolova");
-        $(byId("gender-radio-2")).click();
+        $("[id=genterWrapper]").$(byText("Other")).click();
         $(byId("userNumber")).setValue("123456789");
         $(byId("submit")).click();
         //проверка результата валидации
         $("[id=formError]").shouldHave(text("Please fill required fields and enter a valid 10-digit mobile number."));
     }
     @Test
-    void verifyFirstNameValidation() { //проверка на заполнение только имени
+    void verifyFirstNameValidationTest() { //проверка на заполнение только имени
         open("/automation-practice-form.html");
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
         $(byId("firstName")).setValue("Anna");
-        $(byId("gender-radio-2")).click();
+        $("[id=genterWrapper]").$(byText("Other")).click();
         $(byId("userNumber")).setValue("8123456789");
         $(byId("submit")).click();
         //проверка результата валидации
         $("[id=formError]").shouldHave(text("Please fill required fields and enter a valid 10-digit mobile number."));
     }
     @Test
-    void verifyastNameValidation() { //проверка на заполнение только фамилии
+    void verifyastNameValidationTest() { //проверка на заполнение только фамилии
         open("/automation-practice-form.html");
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
         $(byId("lastName")).setValue("Ukolova");
-        $(byId("gender-radio-2")).click();
+        $("[id=genterWrapper]").$(byText("Other")).click();
         $(byId("userNumber")).setValue("8123456789");
         $(byId("submit")).click();
         //проверка результата валидации
@@ -116,12 +116,12 @@ public class TestRegistrationForm extends TestBase {
     }
 
     @Test
-    void verifyEmailValidation() { //проверка на валидацию @почта.домен в поле Email
+    void verifyEmailValidationTest() { //проверка на валидацию @почта.домен в поле Email
         open("/automation-practice-form.html");
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
         $(byId("firstName")).setValue("Anna");
         $(byId("lastName")).setValue("Ukolova");
-        $(byId("gender-radio-2")).click();
+        $("[id=genterWrapper]").$(byText("Other")).click();
         $(byId("userNumber")).setValue("8123456789");
         $(byId("userEmail")).setValue("darksomecat");
         $(byId("submit")).click();
@@ -129,12 +129,12 @@ public class TestRegistrationForm extends TestBase {
         $("[id=formError]").shouldHave(text("Please fill required fields and enter a valid 10-digit mobile number."));
     }
     @Test
-    void verifyNameSpecialCharacters() { //проверка на добавление спецсимволов в имя
+    void verifyNameSpecialCharactersTest() { //проверка на добавление спецсимволов в имя
         open("/automation-practice-form.html");
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
         $(byId("firstName")).setValue("AnnaАнна!№;:?*()_{}{");
         $(byId("lastName")).setValue("UkolovaУколова!@#$%^&*()_");
-        $(byId("gender-radio-2")).click();
+        $("[id=genterWrapper]").$(byText("Other")).click();
         $(byId("userNumber")).setValue("8123456789");
         $(byId("submit")).click();
         //проверка результата заполнения формы

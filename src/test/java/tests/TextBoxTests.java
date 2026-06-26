@@ -46,7 +46,7 @@ public class TextBoxTests extends TestBase {
     $("[id=output] [id=permanentAddress]").shouldHave(text("Permananet Address :"));
   }
   @Test
-  void verifyEmailValidation() { //проверка на валидацию @почта.домен в поле Email
+  void verifyEmailValidationTest() { //проверка на валидацию @почта.домен в поле Email
     open("/text-box.html");
     $("[id=userEmail]").setValue("anna");
     $("[id=submit]").click();
