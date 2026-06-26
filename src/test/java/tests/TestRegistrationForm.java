@@ -35,16 +35,16 @@ public class TestRegistrationForm extends TestBase {
         $(byId("submit")).click();
         //проверка результата заполнения формы
         $("[id=example-modal-sizes-title-lg]").shouldHave(text("Thanks for submitting the form"));
-        $("[id=resultBody]").shouldHave(text("Student Name")).shouldHave(text("Anna Ukolova"));
-        $("[id=resultBody]").shouldHave(text("Student Email")).shouldHave(text("darksomecat@gmails.com"));
-        $("[id=resultBody]").shouldHave(text("Gender")).shouldHave(text("Other"));
-        $("[id=resultBody]").shouldHave(text("Mobile")).shouldHave(text("8123456789"));
-        $("[id=resultBody]").shouldHave(text("Date of Birth")).shouldHave(text("02 Dec 1997"));
-        $("[id=resultBody]").shouldHave(text("Subjects")).shouldHave(text("Computer Science"));
-        $("[id=resultBody]").shouldHave(text("Hobbies")).shouldHave(text("Music"));
-        $("[id=resultBody]").shouldHave(text("Picture")).shouldHave(text("images.jpeg"));
-        $("[id=resultBody]").shouldHave(text("Address")).shouldHave(text("My address"));
-        $("[id=resultBody]").shouldHave(text("State and City")).shouldHave(text("NCR Delhi"));
+        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Anna Ukolova"));
+        $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text("darksomecat@gmails.com"));
+        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Other"));
+        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("8123456789"));
+        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text("02 Dec 1997"));
+        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text("Computer Science"));
+        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text("Music"));
+        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("images.jpeg"));
+        $(".table-responsive").$(byText("Address")).parent().shouldHave(text("My address"));
+        $(".table-responsive").$(byText("State and City")).parent().shouldHave(text("NCR Delhi"));
         $(byId("closeModal")).click();
     }
 
@@ -54,21 +54,21 @@ public class TestRegistrationForm extends TestBase {
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
         $(byId("firstName")).setValue("Anna");
         $(byId("lastName")).setValue("Ukolova");
-        $("[id=genterWrapper]").$(byText("Other")).click();
+        $("[id=genterWrapper]").$(byText("Female")).click();
         $(byId("userNumber")).setValue("8123456789");
         $(byId("submit")).click();
         //проверка результата заполнения формы
         $("[id=example-modal-sizes-title-lg]").shouldHave(text("Thanks for submitting the form"));
-        $("[id=resultBody]").shouldHave(text("Student Name")).shouldHave(text("Anna Ukolova"));
-        $("[id=resultBody]").shouldHave(text("Student Email")).shouldHave(text("-"));
-        $("[id=resultBody]").shouldHave(text("Gender")).shouldHave(text("Female"));
-        $("[id=resultBody]").shouldHave(text("Mobile")).shouldHave(text("8123456789"));
-        $("[id=resultBody]").shouldHave(text("Date of Birth")).shouldHave(text("-"));
-        $("[id=resultBody]").shouldHave(text("Subjects")).shouldHave(text("-"));
-        $("[id=resultBody]").shouldHave(text("Hobbies")).shouldHave(text("-"));
-        $("[id=resultBody]").shouldHave(text("Picture")).shouldHave(text("-"));
-        $("[id=resultBody]").shouldHave(text("Address")).shouldHave(text("-"));
-        $("[id=resultBody]").shouldHave(text("State and City")).shouldHave(text("-"));
+        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Anna Ukolova"));
+        $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text("-"));
+        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Female"));
+        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("8123456789"));
+        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text("-"));
+        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text("-"));
+        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text("-"));
+        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("-"));
+        $(".table-responsive").$(byText("Address")).parent().shouldHave(text("-"));
+        $(".table-responsive").$(byText("State and City")).parent().shouldHave(text("-"));
         $(byId("closeModal")).click();
     }
 
@@ -116,14 +116,13 @@ public class TestRegistrationForm extends TestBase {
     }
 
     @Test
-    void verifyEmailValidationTest() { //проверка на валидацию @почта.домен в поле Email
+    void verifyMolileNumberValidationTest() { //проверка на валидацию только цифр в поле Mobile
         open("/automation-practice-form.html");
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
         $(byId("firstName")).setValue("Anna");
         $(byId("lastName")).setValue("Ukolova");
         $("[id=genterWrapper]").$(byText("Other")).click();
-        $(byId("userNumber")).setValue("8123456789");
-        $(byId("userEmail")).setValue("darksomecat");
+        $(byId("userNumber")).setValue("qweasdzxcv");
         $(byId("submit")).click();
         //проверка результата валидации
         $("[id=formError]").shouldHave(text("Please fill required fields and enter a valid 10-digit mobile number."));
@@ -138,7 +137,7 @@ public class TestRegistrationForm extends TestBase {
         $(byId("userNumber")).setValue("8123456789");
         $(byId("submit")).click();
         //проверка результата заполнения формы
-        $("[id=resultBody]").shouldHave(text("Student Name")).shouldHave(text("AnnaАнна!№;:?*()_{}{ UkolovaУколова!@#$%^&*()_"));
+        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("AnnaАнна!№;:?*()_{}{ UkolovaУколова!@#$%^&*()_"));
         $(byId("closeModal")).click();
     }
 
