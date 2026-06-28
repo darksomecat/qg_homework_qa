@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 //import org.openqa.selenium.chrome.ChromeOptions;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TextBoxTests extends TestBase {
 
@@ -35,7 +35,7 @@ public class TextBoxTests extends TestBase {
     $("[id=output] [id=permanentAddress]").shouldHave(text("Permananet Address :"));
   }
   @Test
-  void successfulNameFormTest(){    //проверка пустой формы
+  void successfulNameFormTest(){    //проверка формы с 1 атрибутом
     open("/text-box.html");
     $("[id=userName]").setValue("Anna");
     $("[id=submit]").click();
@@ -51,8 +51,11 @@ public class TextBoxTests extends TestBase {
     $("[id=userEmail]").setValue("anna");
     $("[id=submit]").click();
     //проверка результата заполнения
-    $("[id=output] [id=email]").shouldHave(text("Адрес электронной почты должен содержать символ \\\"@\\\". В адресе \\\"sd\\\" отсутствует символ \"@\\\""));
-
+    String validationMessage = executeJavaScript("return arguments[0].validationMessage;", $("[id=userEmail]"));
+    assertEquals(
+            "Адрес электронной почты должен содержать символ \"@\". В адресе \"anna\" отсутствует символ \"@\".",
+            validationMessage
+    );
   }
 }
 
