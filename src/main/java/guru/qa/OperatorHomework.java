@@ -23,7 +23,6 @@ public class OperatorHomework {
         int pack = 128;
         byte fullpackage = (byte)pack;
         System.out.println(fullpackage);
-        System.out.println("что же я наделала?!");
         }
 
     public static void main(String[] args) {
