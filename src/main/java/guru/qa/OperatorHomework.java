@@ -20,9 +20,8 @@ public class OperatorHomework {
         System.out.println(bottle+garbage == take);
         System.out.println(10 / 2.5 <= take);
         //получить переполнение при арифметической операции
-        int pack = 128;
-        byte fullpackage = (byte)pack;
-        System.out.println(fullpackage);
+        int max = Integer.MAX_VALUE;
+        System.out.println(max + 1);
         }
 
     public static void main(String[] args) {
