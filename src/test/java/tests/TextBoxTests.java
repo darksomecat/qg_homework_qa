@@ -1,27 +1,29 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
+import tests.testdata.TestBase;
 //import org.openqa.selenium.chrome.ChromeOptions;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static tests.testdata.TestData.*;
 
 public class TextBoxTests extends TestBase {
 
   @Test
     void successfulFillFormTest(){ //полностью заполненная форма
       open("/text-box.html");
-      $("[id=userName]").setValue("Anna Ukolova");
-      $("[id=userEmail]").setValue("anna@mailzz.ru");
-      $("[id=currentAddress]").setValue("ул.Пушкина д2");
-      $("[id=permanentAddress]").setValue("ул.Колотушкина");
+      $("[id=userName]").setValue(userName + " " + userLastName);
+      $("[id=userEmail]").setValue(userEmail);
+      $("[id=currentAddress]").setValue(currentAddress);
+      $("[id=permanentAddress]").setValue(permanentAddress);
       $("[id=submit]").click();
       //проверка результата заполнения
-      $("[id=output] [id=name]").shouldHave(text("Anna Ukolova"));
-      $("[id=output] [id=email]").shouldHave(text("anna@mailzz.ru"));
-      $("[id=output] [id=currentAddress]").shouldHave(text("ул.Пушкина д2"));
-      $("[id=output] [id=permanentAddress]").shouldHave(text("ул.Колотушкина"));
+      $("[id=output] [id=name]").shouldHave(text(userName));
+      $("[id=output] [id=email]").shouldHave(text(userEmail));
+      $("[id=output] [id=currentAddress]").shouldHave(text(currentAddress));
+      $("[id=output] [id=permanentAddress]").shouldHave(text(permanentAddress));
    }
 
   @Test
@@ -37,10 +39,10 @@ public class TextBoxTests extends TestBase {
   @Test
   void successfulNameFormTest(){    //проверка формы с 1 атрибутом
     open("/text-box.html");
-    $("[id=userName]").setValue("Anna");
+    $("[id=userName]").setValue(userName);
     $("[id=submit]").click();
     //проверка результата заполнения
-    $("[id=output] [id=name]").shouldHave(text("Name:Anna"));
+    $("[id=output] [id=name]").shouldHave(text(userName));
     $("[id=output] [id=email]").shouldHave(text("Email:"));
     $("[id=output] [id=currentAddress]").shouldHave(text("Current Address :"));
     $("[id=output] [id=permanentAddress]").shouldHave(text("Permananet Address :"));
@@ -48,7 +50,7 @@ public class TextBoxTests extends TestBase {
   @Test
   void verifyEmailValidationTest() { //проверка на валидацию @почта.домен в поле Email
     open("/text-box.html");
-    $("[id=userEmail]").setValue("anna");
+    $("[id=userEmail]").setValue(invalidUserEmail);
     $("[id=submit]").click();
     //проверка результата заполнения
     String validationMessage = executeJavaScript("return arguments[0].validationMessage;", $("[id=userEmail]"));
