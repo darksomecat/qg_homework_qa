@@ -18,7 +18,10 @@ public class TestData {
     public static String phoneInputWithLetters = "qweasdzxcv";
     public static String formErrorText = "Please fill required fields and enter a valid 10-digit mobile number.";
     public static String titleTableForm = "Thanks for submitting the form";
-    public static String dateOfBirth = "02 Dec 1997";
+    public static String birthDay = "02";
+    public static int birthMonthIndex = 11;
+    public static String birthMonth = "Dec";
+    public static String birthYear = "1997";
 
 
 }
