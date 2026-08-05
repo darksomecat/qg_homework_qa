@@ -1,7 +1,6 @@
 package tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tests.testdata.TestBase;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.*;
@@ -26,8 +25,8 @@ public class TestRegistrationForm extends TestBase {
         $("[id=genterWrapper]").$(byText(gender)).click();
         $(byId("userNumber")).setValue(userNumber);
         $(byId("dateOfBirthInput")).click();
-        $(byClassName("react-datepicker__month-select")).selectOption(11);
-        $(byClassName("react-datepicker__year-select")).selectOption("1997");
+        $(byClassName("react-datepicker__month-select")).selectOption(birthMonthIndex);
+        $(byClassName("react-datepicker__year-select")).selectOption(birthYear);
         $(".react-datepicker__day.react-datepicker__day--002").click();
         $(byId("subjectsInput")).setValue(subjectsInput);
         $(byId("subjectsDropdown")).click();
@@ -45,7 +44,7 @@ public class TestRegistrationForm extends TestBase {
         $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text(userEmail));
         $(".table-responsive").$(byText("Gender")).parent().shouldHave(text(gender));
         $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text(userNumber));
-        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text(dateOfBirth));
+        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text(birthDay + " " + birthMonth + " " + birthYear));
         $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text(subjectsInput));
         $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text(Hobbies));
         $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("images.jpeg"));
