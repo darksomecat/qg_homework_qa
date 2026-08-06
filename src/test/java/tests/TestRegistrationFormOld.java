@@ -9,11 +9,13 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static tests.testdata.TestData.*;
 
-public class TestRegistrationForm extends TestBase {
+public class TestRegistrationFormOld extends TestBase {
     @BeforeEach
     void openRegistrationForm() {
         open("/automation-practice-form.html");
     }
+
+
     @Test
     void registrationFormTest() { //заполнение полной формы
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
@@ -27,7 +29,7 @@ public class TestRegistrationForm extends TestBase {
         $(byId("dateOfBirthInput")).click();
         $(byClassName("react-datepicker__month-select")).selectOption(birthMonthIndex);
         $(byClassName("react-datepicker__year-select")).selectOption(birthYear);
-        $(".react-datepicker__day.react-datepicker__day--002").click();
+        $(".react-datepicker__day.react-datepicker__day--0"+birthDay).click();
         $(byId("subjectsInput")).setValue(subjectsInput);
         $(byId("subjectsDropdown")).click();
         $("[id=hobbiesWrapper]").$(byText(Hobbies)).click();
@@ -40,6 +42,8 @@ public class TestRegistrationForm extends TestBase {
         $(byId("submit")).click();
         //проверка результата заполнения формы
         $("[id=example-modal-sizes-title-lg]").shouldHave(text(titleTableForm));
+
+
         $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(userName +" " + userLastName));
         $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text(userEmail));
         $(".table-responsive").$(byText("Gender")).parent().shouldHave(text(gender));
@@ -50,6 +54,10 @@ public class TestRegistrationForm extends TestBase {
         $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("images.jpeg"));
         $(".table-responsive").$(byText("Address")).parent().shouldHave(text(currentAddress));
         $(".table-responsive").$(byText("State and City")).parent().shouldHave(text(state + " " + city));
+
+        //или
+        $(".table-responsive").shouldHave(text(userName +" " + userLastName), text(userEmail), text(gender));  //и т.д.
+
         $(byId("closeModal")).click();
     }
 
