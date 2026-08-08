@@ -1,143 +1,152 @@
 package tests;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selectors.byClassName;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static tests.testdata.TableRegistrationForm.*;
 import static tests.testdata.TestData.*;
 
 public class TestRegistrationForm extends TestBase {
-    @BeforeEach
-    void openRegistrationForm() {
-        open("/automation-practice-form.html");
-    }
     @Test
-    void registrationFormTest() { //заполнение полной формы
-        $("[aria-label=Close]").click(); //закрытие всплывающего окна
-        $(".card").shouldHave(text("Practice Form"));
-        $(".practice-form-wrapper .subtitle").shouldHave(text("Student Registration Form"));
-        $(byId("firstName")).setValue(userName);
-        $(byId("lastName")).setValue(userLastName);
-        $(byId("userEmail")).setValue(userEmail);
-        $("[id=genterWrapper]").$(byText(gender)).click();
-        $(byId("userNumber")).setValue(userNumber);
-        $(byId("dateOfBirthInput")).click();
-        $(byClassName("react-datepicker__month-select")).selectOption(birthMonthIndex);
-        $(byClassName("react-datepicker__year-select")).selectOption(birthYear);
-        $(".react-datepicker__day.react-datepicker__day--002").click();
-        $(byId("subjectsInput")).setValue(subjectsInput);
-        $(byId("subjectsDropdown")).click();
-        $("[id=hobbiesWrapper]").$(byText(Hobbies)).click();
-        $("[id=uploadPicture]").uploadFromClasspath("images.jpeg");
-        $(byId("currentAddress")).setValue(currentAddress);
-        $(byId("state")).click();
-        $("[id=stateCity-wrapper]").$(byText(state)).click();
-        $(byId("city")).click();
-        $("[id=stateCity-wrapper]").$(byText(city)).click();
-        $(byId("submit")).click();
-        //проверка результата заполнения формы
-        $("[id=example-modal-sizes-title-lg]").shouldHave(text(titleTableForm));
-        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(userName +" " + userLastName));
-        $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text(userEmail));
-        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text(gender));
-        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text(userNumber));
-        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text(birthDay + " " + birthMonth + " " + birthYear));
-        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text(subjectsInput));
-        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text(Hobbies));
-        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("images.jpeg"));
-        $(".table-responsive").$(byText("Address")).parent().shouldHave(text(currentAddress));
-        $(".table-responsive").$(byText("State and City")).parent().shouldHave(text(state + " " + city));
-        $(byId("closeModal")).click();
+    @DisplayName("Заполнение полной формы")
+    void registrationFormTest() {
+        registrationPage.openPage()
+                .tittleAndSubtittlePageRegistrationForm(practiceFormTittle, registrationTittle)
+                .typeFirstName(userName)
+                .typeLastName(userLastName)
+                .typeEmailInput(userEmail)
+                .setGender(gender)
+                .typeUserNumberInput(userNumber)
+                .setDateOfBirth(birthDay, birthMonthIndex, birthYear)
+                .typeSubjectsInput(subjectsInput)
+                .typeGetHobbiesWrapper(hobbies)
+                .fileUploader(fileName)
+                .typeUserCurrentAddress(currentAddress)
+                .setStateAndCity(state, city)
+                .submitButton()
+                .tittleTableSubmittingForm(titleTableForm)
+                .checkResultTable(STUDENT_NAME, userName + " " + userLastName)
+                .checkResultTable(STUDENT_EMAIL, userEmail)
+                .checkResultTable(GENDER, gender)
+                .checkResultTable(MOBILE, userNumber)
+                .checkResultTable(DATE_OF_BIRTH, birthDay + " " + birthMonth + " " + birthYear)
+                .checkResultTable(SUBJECTS, subjectsInput)
+                .checkResultTable(HOBBIES, hobbies)
+                .checkResultTable(PICTURE, fileName)
+                .checkResultTable(ADDRESS, currentAddress)
+                .checkResultTable(STATE_AND_CITY, state + " " + city)
+                .closeModalButton();
     }
 
     @Test
-    void requiredAttrTest() { //заполнение обязательных полей
-        $("[aria-label=Close]").click(); //закрытие всплывающего окна
-        $(byId("firstName")).setValue(userName);
-        $(byId("lastName")).setValue(userLastName);
-        $("[id=genterWrapper]").$(byText(gender)).click();
-        $(byId("userNumber")).setValue(userNumber);
-        $(byId("submit")).click();
-        //проверка результата заполнения формы
-        $("[id=example-modal-sizes-title-lg]").shouldHave(text(titleTableForm));
-        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(userName + " " + userLastName));
-        $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text("-"));
-        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text(gender));
-        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text(userNumber));
-        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text("-"));
-        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text("-"));
-        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text("-"));
-        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("-"));
-        $(".table-responsive").$(byText("Address")).parent().shouldHave(text("-"));
-        $(".table-responsive").$(byText("State and City")).parent().shouldHave(text("-"));
-        $(byId("closeModal")).click();
+    @DisplayName("Заполнение обязательных полей")
+    void requiredAttrTest() {
+        registrationPage.openPage()
+                .tittleAndSubtittlePageRegistrationForm(practiceFormTittle, registrationTittle)
+                .typeFirstName(userName)
+                .typeLastName(userLastName)
+                .setGender(gender)
+                .typeUserNumberInput(userNumber)
+                .submitButton()
+                .tittleTableSubmittingForm(titleTableForm)
+                .checkResultTable(STUDENT_NAME, userName + " " + userLastName)
+                .checkResultTable(STUDENT_EMAIL, "-")
+                .checkResultTable(GENDER, gender)
+                .checkResultTable(MOBILE, userNumber)
+                .checkResultTable(DATE_OF_BIRTH, "-")
+                .checkResultTable(SUBJECTS, "-")
+                .checkResultTable(HOBBIES, "-")
+                .checkResultTable(PICTURE, "-")
+                .checkResultTable(ADDRESS, "-")
+                .checkResultTable(STATE_AND_CITY, "-")
+                .closeModalButton();
     }
 
     @Test
-    void verifyEmptyFormValidationTest() { //проверка по нажатию на кнопку в пустой форме
-         $("[aria-label=Close]").click(); //закрытие всплывающего окна
-         $(byId("submit")).click();
-         //проверка результата валидации
-         $("[id=formError]").shouldHave(text(formErrorText));
-}
-    @Test
-    void verifyNumberValidationTest() { //проверка на 9 символов в номере
-        $("[aria-label=Close]").click(); //закрытие всплывающего окна
-        $(byId("firstName")).setValue(userName);
-        $(byId("lastName")).setValue(userLastName);
-        $("[id=genterWrapper]").$(byText(gender)).click();
-        $(byId("userNumber")).setValue(invalidShortUserNumber);
-        $(byId("submit")).click();
-        //проверка результата валидации
-        $("[id=formError]").shouldHave(text(formErrorText));
+    @DisplayName("Проверка по нажатию на кнопку в пустой форме")
+    void verifyEmptyFormValidationTest() {
+        registrationPage.openPage()
+                .tittleAndSubtittlePageRegistrationForm(practiceFormTittle, registrationTittle)
+                .submitButton()
+                .errorMassage(formErrorText);
+
     }
     @Test
-    void verifyFirstNameValidationTest() { //проверка на заполнение только имени
-        $("[aria-label=Close]").click(); //закрытие всплывающего окна
-        $(byId("firstName")).setValue(userName);
-        $("[id=genterWrapper]").$(byText(gender)).click();
-        $(byId("userNumber")).setValue(userNumber);
-        $(byId("submit")).click();
-        //проверка результата валидации
-        $("[id=formError]").shouldHave(text(formErrorText));
+    @DisplayName("Проверка на 9 символов в номере")
+
+    void verifyNumberValidationTest() {
+        registrationPage.openPage()
+                .tittleAndSubtittlePageRegistrationForm(practiceFormTittle, registrationTittle)
+                .typeFirstName(userName)
+                .typeLastName(userLastName)
+                .setGender(gender)
+                .typeUserNumberInput(invalidShortUserNumber)
+                .submitButton()
+                .errorMassage(formErrorText);
     }
     @Test
+    @DisplayName("Проверка на заполнение только имени")
+
+    void verifyFirstNameValidationTest() {
+        registrationPage.openPage()
+                .tittleAndSubtittlePageRegistrationForm(practiceFormTittle, registrationTittle)
+                .typeFirstName(userName)
+                .setGender(gender)
+                .typeUserNumberInput(userNumber)
+                .submitButton()
+                .errorMassage(formErrorText);
+    }
+
+    @Test
+    @DisplayName("Проверка на заполнение только фамилии")
+
     void verifyastNameValidationTest() { //проверка на заполнение только фамилии
-        $("[aria-label=Close]").click(); //закрытие всплывающего окна
-        $(byId("lastName")).setValue(userLastName);
-        $("[id=genterWrapper]").$(byText(gender)).click();
-        $(byId("userNumber")).setValue(userNumber);
-        $(byId("submit")).click();
-        //проверка результата валидации
-        $("[id=formError]").shouldHave(text(formErrorText));
+        registrationPage.openPage()
+                .tittleAndSubtittlePageRegistrationForm(practiceFormTittle, registrationTittle)
+                .typeLastName(userLastName)
+                .setGender(gender)
+                .typeUserNumberInput(invalidShortUserNumber)
+                .submitButton()
+                .errorMassage(formErrorText);
     }
 
     @Test
-    void verifyMolileNumberValidationTest() { //проверка на валидацию только цифр в поле Mobile
-        $("[aria-label=Close]").click(); //закрытие всплывающего окна
-        $(byId("firstName")).setValue(userName);
-        $(byId("lastName")).setValue(userEmail);
-        $("[id=genterWrapper]").$(byText(gender)).click();
-        $(byId("userNumber")).setValue(phoneInputWithLetters);
-        $(byId("submit")).click();
-        //проверка результата валидации
-        $("[id=formError]").shouldHave(text(formErrorText));
+    @DisplayName("Проверка на валидацию только цифр в поле Mobile")
+
+    void verifyMolileNumberValidationTest() {
+        registrationPage.openPage()
+                .tittleAndSubtittlePageRegistrationForm(practiceFormTittle, registrationTittle)
+                .typeFirstName(userName)
+                .typeLastName(userLastName)
+                .setGender(gender)
+                .typeUserNumberInput(phoneInputWithLetters)
+                .submitButton()
+                .errorMassage(formErrorText);
     }
+
+
     @Test
-    void verifyNameSpecialCharactersTest() { //проверка на добавление спецсимволов в имя
-        $("[aria-label=Close]").click(); //закрытие всплывающего окна
-        $(byId("firstName")).setValue(userName + specChars);
-        $(byId("lastName")).setValue(userLastName + specChars);
-        $("[id=genterWrapper]").$(byText(gender)).click();
-        $(byId("userNumber")).setValue(userNumber);
-        $(byId("submit")).click();
-        //проверка результата заполнения формы
-        $("[id=example-modal-sizes-title-lg]").shouldHave(text(titleTableForm));
-        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(userName + specChars + " " + userLastName + specChars));
-        $(byId("closeModal")).click();
+    @DisplayName("Проверка на добавление спецсимволов в имя")
+
+    void verifyNameSpecialCharactersTest() {
+        registrationPage.openPage()
+                .tittleAndSubtittlePageRegistrationForm(practiceFormTittle, registrationTittle)
+                .typeFirstName(userName + specChars)
+                .typeLastName(userLastName + specChars)
+                .setGender(gender)
+                .typeUserNumberInput(userNumber)
+                .submitButton()
+                .tittleTableSubmittingForm(titleTableForm)
+                .checkResultTable(STUDENT_NAME, userName + specChars + " " + userLastName + specChars)
+                .checkResultTable(STUDENT_EMAIL, "-")
+                .checkResultTable(GENDER, gender)
+                .checkResultTable(MOBILE, userNumber)
+                .checkResultTable(DATE_OF_BIRTH, "-")
+                .checkResultTable(SUBJECTS, "-")
+                .checkResultTable(HOBBIES, "-")
+                .checkResultTable(PICTURE, "-")
+                .checkResultTable(ADDRESS, "-")
+                .checkResultTable(STATE_AND_CITY, "-")
+                .closeModalButton();
     }
 
 }
