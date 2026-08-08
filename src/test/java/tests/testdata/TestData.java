@@ -2,6 +2,7 @@ package tests.testdata;
 
 public class TestData {
     public static String userName = "Anna";
+    public static String fullName = "Anna Ukolova";
     public static String specChars = "!@#$%^&!№;:?*()_{}{";
     public static String userLastName = "Ukolova";
     public static String userEmail = "anna@mailzz.ru";
@@ -10,7 +11,7 @@ public class TestData {
     public static String invalidUserEmail = "anna";
     public static String userNumber = "8123456789";
     public static String subjectsInput = "Computer Science";
-    public static String Hobbies = "Music";
+    public static String hobbies = "Music";
     public static String state = "NCR";
     public static String city = "Delhi";
     public static String gender  = "Other";
@@ -18,10 +19,13 @@ public class TestData {
     public static String phoneInputWithLetters = "qweasdzxcv";
     public static String formErrorText = "Please fill required fields and enter a valid 10-digit mobile number.";
     public static String titleTableForm = "Thanks for submitting the form";
+    public static String practiceFormTittle = "Practice Form";
+    public static String registrationTittle = "Student Registration Form";
     public static String birthDay = "02";
     public static int birthMonthIndex = 11;
     public static String birthMonth = "Dec";
     public static String birthYear = "1997";
+    public static String fileName = "images.jpeg";
 
 
 }
