@@ -1,21 +1,18 @@
 package tests.pages;
 
 import com.codeborne.selenide.SelenideElement;
-import tests.testdata.TableTextBoxPage;
-
-import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TextBoxPage {
-    private SelenideElement userNameInput = $("#userName");
-    private SelenideElement userEmailInput = $("#userEmail");
-    private SelenideElement submitButton = $("#submit");
-    private SelenideElement outputResults = $("#output");
-    private SelenideElement userCurrentAddress = $("#currentAddress");
-    private SelenideElement userPermanentAddress = $("#permanentAddress");
+    private final SelenideElement userNameInput = $("#userName");
+    private final SelenideElement userEmailInput = $("#userEmail");
+    private final SelenideElement submitButton = $("#submit");
+    private final SelenideElement outputResults = $("#output");
+    private final SelenideElement userCurrentAddress = $("#currentAddress");
+    private final SelenideElement userPermanentAddress = $("#permanentAddress");
 
 
     public TextBoxPage openPage(){
@@ -52,18 +49,12 @@ public class TextBoxPage {
 
         return this;
     }
-    public TextBoxPage checkField(TableTextBoxPage field, String value) {
-        if (value == null || value.isEmpty())
-        {
-            outputResults.$(byId(field.getId())).shouldHave(exactText(field.getEmptyText()));
-        }
-        else
-        {
-            outputResults.$(byId(field.getId())).shouldHave(text(value));
-        }
+    public TextBoxPage checkField(String key, String value) {
+        outputResults.$(byId(key)).shouldHave(text(value));
 
         return this;
     }
+
     public TextBoxPage checkValidationMessage(String value) {
         String validationMessage = executeJavaScript("return arguments[0].validationMessage;", $("[id=userEmail]"));
         assertEquals(

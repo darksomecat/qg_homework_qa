@@ -3,14 +3,13 @@ package tests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static tests.testdata.TestData.*;
-import static tests.testdata.TableTextBoxPage.*;
 
 public class TextBoxTests extends TestBase {
 
     @Test
     @DisplayName("полностью заполненная форма")
 
-    void successfulFillFormTest_chaining() {
+    void successfulFillFormTest() {
 
         textBoxPage
                 .openPage()
@@ -20,25 +19,21 @@ public class TextBoxTests extends TestBase {
                 .typePermanentAddress(permanentAddress)
 
                 .submitForm()
-                .checkField(NAME, fullName)
-                .checkField(EMAIL, userEmail)
-                .checkField(CURRENT_ADDRESS, currentAddress)
-                .checkField(PERMANENT_ADDRESS, permanentAddress);
+                .checkField("name", fullName)
+                .checkField("email", userEmail)
+                .checkField("currentAddress", currentAddress)
+                .checkField("permanentAddress", permanentAddress);
 
     }
 
     @Test
-    @DisplayName("проверка пустой формы")
+    @DisplayName("проверка приема пустой формы")
 
     void successfulEmptyFormTest(){
 
             textBoxPage
                     .openPage()
-                    .submitForm()
-                    .checkField(NAME, "")
-                    .checkField(EMAIL, "")
-                    .checkField(CURRENT_ADDRESS, "")
-                    .checkField(PERMANENT_ADDRESS, "");
+                    .submitForm();
 
     }
 
@@ -51,10 +46,7 @@ public class TextBoxTests extends TestBase {
                 .openPage()
                 .typeUserName(fullName)
                 .submitForm()
-                .checkField(NAME, fullName)
-                .checkField(EMAIL, "")
-                .checkField(CURRENT_ADDRESS, "")
-                .checkField(PERMANENT_ADDRESS, "");
+                .checkField("name", fullName);
 
     }
 

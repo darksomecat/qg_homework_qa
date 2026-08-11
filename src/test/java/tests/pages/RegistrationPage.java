@@ -2,9 +2,7 @@ package tests.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import tests.pages.components.CalendarComponent;
-import tests.testdata.TableRegistrationForm;
-
-import static com.codeborne.selenide.Condition.exactText;
+import tests.pages.components.RegistrationFormResultComponent;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selectors.byText;
@@ -13,7 +11,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationPage {
     CalendarComponent calender = new CalendarComponent();
-
+    RegistrationFormResultComponent registrationFormResult = new RegistrationFormResultComponent();
     public RegistrationPage openPage(){
         open("/automation-practice-form");
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
@@ -22,24 +20,22 @@ public class RegistrationPage {
         return this;
     }
 
-    private SelenideElement firstNameInput = $("#firstName");
-    private SelenideElement lastNameInput = $("#lastName");
-    private SelenideElement emailInput = $("#userEmail");
-    private SelenideElement genderConteiner = $("#genterWrapper");
-    private SelenideElement userNumberInput = $("#userNumber");
-    private SelenideElement subjectsInput = $("#subjectsInput");
-    private SelenideElement hobbiesContainer = $("#hobbiesWrapper");
-    private SelenideElement pictureUpload = $("#uploadPicture");
-    private SelenideElement userCurrentAddress = $("#currentAddress");
-    private SelenideElement stateSelect = $("#state");
-    private SelenideElement citySelect = $("#city");
-    private SelenideElement resultsRegistration = $(".table-responsive");
-    private SelenideElement tittleTable = $("#example-modal-sizes-title-lg");
-    private SelenideElement titleMainPageRegistrationForm = $(".card");
-    private SelenideElement subtitleMainPageRegistrationForm = $(".subtitle");
-    private SelenideElement submitForm = $("#submit");
-    private SelenideElement closeModal = $("#closeModal");
-    private SelenideElement validMassage = $("#formError");
+    private final SelenideElement firstNameInput = $("#firstName");
+    private final SelenideElement lastNameInput = $("#lastName");
+    private final SelenideElement emailInput = $("#userEmail");
+    private final SelenideElement genderConteiner = $("#genterWrapper");
+    private final SelenideElement userNumberInput = $("#userNumber");
+    private final SelenideElement subjectsInput = $("#subjectsInput");
+    private final SelenideElement hobbiesContainer = $("#hobbiesWrapper");
+    private final SelenideElement pictureUpload = $("#uploadPicture");
+    private final SelenideElement userCurrentAddress = $("#currentAddress");
+    private final SelenideElement stateSelect = $("#state");
+    private final SelenideElement citySelect = $("#city");
+    private final SelenideElement titleMainPageRegistrationForm = $(".card");
+    private final SelenideElement subtitleMainPageRegistrationForm = $(".subtitle");
+    private final SelenideElement submitForm = $("#submit");
+    private final SelenideElement closeModal = $("#closeModal");
+    private final SelenideElement validMassage = $("#formError");
 
 
     public RegistrationPage typeFirstName(String value) {
@@ -128,15 +124,10 @@ public class RegistrationPage {
 
         return this;
     }
-    public RegistrationPage tittleAndSubtittlePageRegistrationForm (String tittleForm, String subtittleForm) {
+    public RegistrationPage tittleAndSubtitlePageRegistrationForm(String tittleForm, String subtittleForm) {
         tittleFormPage(tittleForm);
         subtittleFormage(subtittleForm);
 
-        return this;
-    }
-
-    public RegistrationPage tittleTableSubmittingForm (String value) {
-        tittleTable.shouldHave(text(value));
         return this;
     }
 
@@ -152,16 +143,16 @@ public class RegistrationPage {
 
         return this;
     }
-    public RegistrationPage checkResultTable(TableRegistrationForm field, String value) {
-
-        if (value == null || value.isEmpty()) {
-            resultsRegistration.shouldHave(exactText(field.getEmptyText()));
-        } else {
-            resultsRegistration.$(byText(field.getRow())).parent().shouldHave(text(value));
-        }
-
+    public RegistrationPage checkTittleTableSubmittingForm(String value) {
+        registrationFormResult.checkTittleTableSubmittingForm(value);
         return this;
     }
+
+    public RegistrationPage checkResult(String key, String value) {
+        registrationFormResult.checkResult(key, value);
+        return this;
+    }
+
 
         public RegistrationPage submitButton() {
             submitForm.click();
