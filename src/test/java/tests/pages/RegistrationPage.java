@@ -10,8 +10,10 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationPage {
+
     CalendarComponent calender = new CalendarComponent();
     RegistrationFormResultComponent registrationFormResult = new RegistrationFormResultComponent();
+
     public RegistrationPage openPage(){
         open("/automation-practice-form");
         $("[aria-label=Close]").click(); //закрытие всплывающего окна
@@ -99,6 +101,7 @@ public class RegistrationPage {
         $("[id=stateCity-wrapper]").$(byText(value)).click();
         return this;
     }
+
     public RegistrationPage setCity (String value) {
         citySelect.click();
         $("[id=stateCity-wrapper]").$(byText(value)).click();
@@ -118,12 +121,12 @@ public class RegistrationPage {
         return this;
     }
 
-
     public RegistrationPage subtittleFormage (String value) {
         subtitleMainPageRegistrationForm.shouldHave(text(value));
 
         return this;
     }
+
     public RegistrationPage tittleAndSubtitlePageRegistrationForm(String tittleForm, String subtittleForm) {
         tittleFormPage(tittleForm);
         subtittleFormage(subtittleForm);
@@ -137,12 +140,13 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setDateOfBirth(String day, int month, String year) {
+    public RegistrationPage setDateOfBirth(int day, String month, int year) {
         $("#dateOfBirthInput").click();
         calender.setDate(day, month, year);
 
         return this;
     }
+
     public RegistrationPage checkTittleTableSubmittingForm(String value) {
         registrationFormResult.checkTittleTableSubmittingForm(value);
         return this;
@@ -153,15 +157,16 @@ public class RegistrationPage {
         return this;
     }
 
-
         public RegistrationPage submitButton() {
             submitForm.click();
 
         return this;
     }
+
         public RegistrationPage closeModalButton() {
             closeModal.click();
 
         return this;
     }
+
 }

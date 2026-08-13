@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TextBoxPage {
+
     private final SelenideElement userNameInput = $("#userName");
     private final SelenideElement userEmailInput = $("#userEmail");
     private final SelenideElement submitButton = $("#submit");
@@ -32,6 +33,7 @@ public class TextBoxPage {
 
         return this;
     }
+
     public TextBoxPage typePermanentAddress(String value) {
         userPermanentAddress. setValue(value);
 
@@ -49,6 +51,7 @@ public class TextBoxPage {
 
         return this;
     }
+
     public TextBoxPage checkField(String key, String value) {
         outputResults.$(byId(key)).shouldHave(text(value));
 

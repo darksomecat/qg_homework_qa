@@ -2,7 +2,6 @@ package tests;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static tests.testdata.TestData.*;
 
 public class TextBoxTests extends TestBase {
 
@@ -13,16 +12,16 @@ public class TextBoxTests extends TestBase {
 
         textBoxPage
                 .openPage()
-                .typeUserName(fullName)
-                .typeUserEmail(userEmail)
-                .typeCurrentAddress(currentAddress)
-                .typePermanentAddress(permanentAddress)
+                .typeUserName(testData.fullName)
+                .typeUserEmail(testData.userEmail)
+                .typeCurrentAddress(testData.currentAddress)
+                .typePermanentAddress(testData.permanentAddress)
 
                 .submitForm()
-                .checkField("name", fullName)
-                .checkField("email", userEmail)
-                .checkField("currentAddress", currentAddress)
-                .checkField("permanentAddress", permanentAddress);
+                .checkField("name", testData.fullName)
+                .checkField("email", testData.userEmail)
+                .checkField("currentAddress", testData.currentAddress)
+                .checkField("permanentAddress", testData.permanentAddress);
 
     }
 
@@ -31,9 +30,9 @@ public class TextBoxTests extends TestBase {
 
     void successfulEmptyFormTest(){
 
-            textBoxPage
-                    .openPage()
-                    .submitForm();
+        textBoxPage
+                .openPage()
+                .submitForm();
 
     }
 
@@ -44,9 +43,9 @@ public class TextBoxTests extends TestBase {
 
         textBoxPage
                 .openPage()
-                .typeUserName(fullName)
+                .typeUserName(testData.fullName)
                 .submitForm()
-                .checkField("name", fullName);
+                .checkField("name", testData.fullName);
 
     }
 
@@ -57,9 +56,9 @@ public class TextBoxTests extends TestBase {
 
         textBoxPage
                 .openPage()
-                .typeUserEmail(invalidUserEmail)
+                .typeUserEmail(testData.invalidUserEmail)
                 .submitForm()
-                .checkValidationMessage(invalidUserEmail);
+                .checkValidationMessage(testData.invalidUserEmail);
 
     }
 
