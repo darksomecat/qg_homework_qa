@@ -1,6 +1,5 @@
 package tests.testdata;
 
-import Utils.GeneretedUtils;
 import com.github.javafaker.Faker;
 import static Utils.GeneretedUtils.*;
 
@@ -15,16 +14,17 @@ public class TestData {
     public  String currentAddress = faker.address().fullAddress();
     public  String permanentAddress = faker.address().fullAddress();
     public  String invalidUserEmail = getRandomString(8);
-    public  String userNumber = generatePhoneNumber(10);
-    public  String subjectsInput = GeneretedUtils.getRandomSubjects();
-    public  String hobbies = GeneretedUtils.getRandomHobbies();
-    public  String state = selectedState();
+    public  String userNumber = faker.phoneNumber().subscriberNumber(10);
+    public  String subjectsInput = faker.options().option("Maths", "Physics", "Chemistry", "Biology", "English", "Computer Science",
+            "Economics", "Arts", "History", "Civics");
+    public  String hobbies = faker.options().option("Sports", "Reading", "Music");
+    public  String state = faker.options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
     public  String city = SelectCity(state);
-    public  String gender  = GeneretedUtils.getRandomGender();
-    public  String invalidShortUserNumber = generatePhoneNumber(1);
+    public  String gender  = faker.options().option("Male", "Female", "Other");
+    public  String invalidShortUserNumber = faker.phoneNumber().subscriberNumber(1);
     public  String phoneInputWithLetters = getRandomString(10);
     public  int birthDay = faker.number().numberBetween(1, 29);
-    public  String birthMonth = GeneretedUtils.getRandomMonth();
+    public  String birthMonth = faker.options().option("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
     public  int birthYear = faker.number().numberBetween(1900, 2100);
     public  String fileName = "images.jpeg";
 
