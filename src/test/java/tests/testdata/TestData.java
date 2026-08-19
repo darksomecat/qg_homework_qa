@@ -1,31 +1,31 @@
 package tests.testdata;
 
-public class TestData {
-    public static String userName = "Anna";
-    public static String fullName = "Anna Ukolova";
-    public static String specChars = "!@#$%^&!№;:?*()_{}{";
-    public static String userLastName = "Ukolova";
-    public static String userEmail = "anna@mailzz.ru";
-    public static String currentAddress = "ул.Пушкина д2";
-    public static String permanentAddress = "ул.Колотушкина";
-    public static String invalidUserEmail = "anna";
-    public static String userNumber = "8123456789";
-    public static String subjectsInput = "Computer Science";
-    public static String hobbies = "Music";
-    public static String state = "NCR";
-    public static String city = "Delhi";
-    public static String gender  = "Other";
-    public static String invalidShortUserNumber = "123456789";
-    public static String phoneInputWithLetters = "qweasdzxcv";
-    public static String formErrorText = "Please fill required fields and enter a valid 10-digit mobile number.";
-    public static String titleTableForm = "Thanks for submitting the form";
-    public static String practiceFormTittle = "Practice Form";
-    public static String registrationTittle = "Student Registration Form";
-    public static String birthDay = "02";
-    public static int birthMonthIndex = 11;
-    public static String birthMonth = "Dec";
-    public static String birthYear = "1997";
-    public static String fileName = "images.jpeg";
+import com.github.javafaker.Faker;
+import static Utils.GeneretedUtils.*;
 
+public class TestData {
+    Faker faker = new Faker();
+
+    public  String userName = faker.name().firstName();
+    public  String fullName = faker.name().fullName();
+    public  String specChars = faker.regexify("[!@#$%^&*()_+\\-=\\[\\]{};':\",./<>?]{10}");
+    public  String userLastName = faker.name().lastName();
+    public  String userEmail = faker.internet().emailAddress();
+    public  String currentAddress = faker.address().fullAddress();
+    public  String permanentAddress = faker.address().fullAddress();
+    public  String invalidUserEmail = getRandomString(8);
+    public  String userNumber = faker.phoneNumber().subscriberNumber(10);
+    public  String subjectsInput = faker.options().option("Maths", "Physics", "Chemistry", "Biology", "English", "Computer Science",
+            "Economics", "Arts", "History", "Civics");
+    public  String hobbies = faker.options().option("Sports", "Reading", "Music");
+    public  String state = faker.options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
+    public  String city = SelectCity(state);
+    public  String gender  = faker.options().option("Male", "Female", "Other");
+    public  String invalidShortUserNumber = faker.phoneNumber().subscriberNumber(1);
+    public  String phoneInputWithLetters = getRandomString(10);
+    public  int birthDay = faker.number().numberBetween(1, 29);
+    public  String birthMonth = faker.options().option("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+    public  int birthYear = faker.number().numberBetween(1900, 2100);
+    public  String fileName = "images.jpeg";
 
 }
