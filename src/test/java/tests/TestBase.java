@@ -28,7 +28,7 @@ public class TestBase {
     @BeforeAll
        static void beforeAll(){
         Configuration.browser = "Chrome";
-        System.getProperty("browserSize", "1080x1500");
+        Configuration.browserSize="1080x1300";
         Configuration.baseUrl = "https://qa-guru.github.io/one-page-form";
         //Configuration.holdBrowserOpen = true;
         ChromeOptions chromeOptions = new ChromeOptions();
