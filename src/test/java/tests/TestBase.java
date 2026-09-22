@@ -6,6 +6,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import tests.helpers.Attach;
 import tests.pages.RegistrationPage;
 import tests.pages.TextBoxPage;
 import tests.testdata.TestData;
@@ -33,7 +34,11 @@ public class TestBase {
     }
     @AfterEach
     void addAtachments() {
+        Attach.screenshotAs("Last screenshot");
+        Attach.pageSource();
+        Attach.attachAsText("Some file", "Some Content");
+        Attach.browserConsoleLogs();
+        Attach.addVideo();
         closeWebDriver();
-
     }
 }
