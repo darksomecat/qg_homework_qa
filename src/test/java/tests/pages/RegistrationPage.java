@@ -61,7 +61,7 @@ public class RegistrationPage {
 
         return this;
     }
-
+    @Step("Ввести тему \"{value}\"")
     public RegistrationPage typeSubjectsInput(String value) {
         subjectsInput.setValue(value);
         $(byId("subjectsDropdown")).click();
@@ -69,18 +69,21 @@ public class RegistrationPage {
         return this;
     }
 
+    @Step("Ввести хобби \"{value}\"")
     public RegistrationPage typeGetHobbiesWrapper(String value) {
         hobbiesContainer.$(byText(value)).click();
 
         return this;
     }
 
+    @Step("Загрузить файл jpeg \"{value}\"")
     public RegistrationPage fileUploader (String value) {
         pictureUpload.uploadFromClasspath(value);
 
         return this;
     }
 
+    @Step("Ввести текущий адрес \"{value}\"")
     public RegistrationPage typeUserCurrentAddress (String value) {
         userCurrentAddress.setValue(value);
 
@@ -94,6 +97,7 @@ public class RegistrationPage {
         return this;
     }
 
+    @Step("Выбрать пол \"{value}\"")
     public RegistrationPage setGender(String value) {
         genderConteiner.$(byText(value)).click();
 
@@ -112,7 +116,7 @@ public class RegistrationPage {
 
         return this;
     }
-
+    @Step("Выбрать штат \"{state}\" и город \"{city}\"")
     public RegistrationPage setStateAndCity (String state, String city) {
         setState(state);
         setCity(city);
@@ -144,6 +148,7 @@ public class RegistrationPage {
         return this;
     }
 
+    @Step("Заполнить дату рождения \"{day}\" \"{month}\" \"{year}\"")
     public RegistrationPage setDateOfBirth(int day, String month, int year) {
         $("#dateOfBirthInput").click();
         calender.setDate(day, month, year);

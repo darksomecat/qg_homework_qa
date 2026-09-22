@@ -2,15 +2,21 @@ package tests;
 import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static io.qameta.allure.Allure.step;
 import static tests.testdata.TittleAndSubtittleForms.*;
 
 public class  TestRegistrationForm extends TestBase {
 
-    @Feature("Регистрация полной формы")
+    @Feature("Форма анкеты регистрации студентов")
     @Test
-    @DisplayName("Заполнение полной формы")
+    @DisplayName("Заполнение всех полей на форме")
+
     void registrationFormTest() {
-        registrationPage.openPage()
+        step("Открыть главную страницу", () ->
+            registrationPage.openPage());
+        step("Ввести данные в форму " + practiceFormTittle, () -> {
+            registrationPage
                 .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle)
                 .typeFirstName(testData.userName)
                 .typeLastName(testData.userLastName)
@@ -22,9 +28,15 @@ public class  TestRegistrationForm extends TestBase {
                 .typeGetHobbiesWrapper(testData.hobbies)
                 .fileUploader(testData.fileName)
                 .typeUserCurrentAddress(testData.currentAddress)
-                .setStateAndCity(testData.state, testData.city)
-                .submitButton()
-                .checkTittleTableSubmittingForm(titleTableForm)
+                .setStateAndCity(testData.state, testData.city);
+        });
+        step("Нажать кнопку submit", () ->
+            registrationPage.submitButton());
+        step("Проверить результаты заполнения данных", () -> {
+            step("Проверить заголовки", () -> {
+            registrationPage
+                .checkTittleTableSubmittingForm(titleTableForm);});
+            registrationPage
                 .checkResult("Student Name", testData.userName + " " + testData.userLastName)
                 .checkResult("Student Email", testData.userEmail)
                 .checkResult("Gender", testData.gender)
@@ -35,21 +47,34 @@ public class  TestRegistrationForm extends TestBase {
                 .checkResult("Hobbies", testData.hobbies)
                 .checkResult("Picture", testData.fileName)
                 .checkResult("Address", testData.currentAddress)
-                .checkResult("State and City", testData.state + " " + testData.city)
-                .closeModalButton();
+                .checkResult("State and City", testData.state + " " + testData.city);});
+        step("Закрыть таблицу " + titleTableForm, () ->
+            registrationPage.closeModalButton());
     }
 
     @Test
-    @DisplayName("Заполнение обязательных полей")
+    @DisplayName("Заполнить только обязательные поля")
+
     void requiredAttrTest() {
-        registrationPage.openPage()
-                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle)
+        step("Открыть главную страницу", () ->
+            registrationPage.openPage());
+        step("Ввести данные в форму " + practiceFormTittle, () -> {
+            step("Проверить заголовки", () -> {
+            registrationPage
+                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle);});
+            registrationPage
                 .typeFirstName(testData.userName)
                 .typeLastName(testData.userLastName)
                 .setGender(testData.gender)
-                .typeUserNumberInput(testData.userNumber)
-                .submitButton()
-                .checkTittleTableSubmittingForm(titleTableForm)
+                .typeUserNumberInput(testData.userNumber);
+        });
+        step("Нажать кнопку submit", () ->
+            registrationPage.submitButton());
+        step("Проверить результаты заполнения данных", () -> {
+             step("Проверить заголовки", () -> {
+             registrationPage
+                .checkTittleTableSubmittingForm(titleTableForm);});
+             registrationPage
                 .checkResult("Student Name", testData.userName + " " + testData.userLastName)
                 .checkResult("Student Email", "-")
                 .checkResult("Gender", testData.gender)
@@ -59,85 +84,140 @@ public class  TestRegistrationForm extends TestBase {
                 .checkResult("Hobbies", "-")
                 .checkResult("Picture", "-")
                 .checkResult("Address", "-")
-                .checkResult("State and City", "-")
-                .closeModalButton();
-    }
+                .checkResult("State and City", "-");
+        });
+        step("Закрыть таблицу " + titleTableForm, () ->
+             registrationPage.closeModalButton());
+        }
 
     @Test
-    @DisplayName("Проверка по нажатию на кнопку в пустой форме")
+    @DisplayName("Валидация незаполненных полей")
+
     void verifyEmptyFormValidationTest() {
-        registrationPage.openPage()
-                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle)
-                .submitButton()
-                .errorMassage(formErrorText);
+        step("Открыть главную страницу", () ->
+            registrationPage.openPage());
+        step("Не заполнять поля формы " + practiceFormTittle, () -> {
+            step("Проверить заголовки", () ->
+            registrationPage
+               .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle));
+        });
+        step("Нажать кнопку submit", () ->
+            registrationPage.submitButton());
+        step("Проверить текст ошибки", () ->
+            registrationPage.errorMassage(formErrorText));
 
     }
 
     @Test
-    @DisplayName("Проверка на 9 символов в номере")
+    @DisplayName("Ввести 9 символов в номер телефона")
 
     void verifyNumberValidationTest() {
-        registrationPage.openPage()
-                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle)
+        step("Открыть главную страницу", () ->
+            registrationPage.openPage());
+        step("Ввести данные в форму " + practiceFormTittle, () -> {
+            step("Проверить заголовки", () -> {
+            registrationPage
+                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle);});
+            registrationPage
                 .typeFirstName(testData.userName)
                 .typeLastName(testData.userLastName)
                 .setGender(testData.gender)
-                .typeUserNumberInput(testData.invalidShortUserNumber)
-                .submitButton()
-                .errorMassage(formErrorText);
+                .typeUserNumberInput(testData.invalidShortUserNumber);
+        });
+        step("Нажать кнопку submit", () ->
+            registrationPage.submitButton());
+        step("Проверить текст ошибки", () ->
+            registrationPage.errorMassage(formErrorText));
+
     }
 
     @Test
-    @DisplayName("Проверка на заполнение только имени")
+    @DisplayName("Валидация на заполнение без фамилии")
 
     void verifyFirstNameValidationTest() {
-        registrationPage.openPage()
-                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle)
+        step("Открыть главную страницу", () ->
+            registrationPage.openPage());
+        step("Ввести данные в форму " + practiceFormTittle, () -> {
+            step("Проверить заголовки", () -> {
+            registrationPage
+                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle);});
+            registrationPage
                 .typeFirstName(testData.userName)
                 .setGender(testData.gender)
-                .typeUserNumberInput(testData.userNumber)
-                .submitButton()
-                .errorMassage(formErrorText);
+                .typeUserNumberInput(testData.userNumber);
+        });
+        step("Нажать кнопку submit", () ->
+            registrationPage.submitButton());
+        step("Проверить текст ошибки", () ->
+            registrationPage.errorMassage(formErrorText));
     }
 
     @Test
-    @DisplayName("Проверка на заполнение только фамилии")
+    @DisplayName("Валидация на заполнение без имени")
 
     void verifyastNameValidationTest() {
-        registrationPage.openPage()
-                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle)
+        step("Открыть главную страницу", () ->
+            registrationPage.openPage());
+        step("Ввести данные в форму " + practiceFormTittle, () -> {
+            step("Проверить заголовки", () -> {
+            registrationPage
+                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle);});
+            registrationPage
                 .typeLastName(testData.userLastName)
                 .setGender(testData.gender)
-                .typeUserNumberInput(testData.userNumber)
-                .submitButton()
-                .errorMassage(formErrorText);
+                .typeUserNumberInput(testData.userNumber);
+        });
+        step("Нажать кнопку submit", () ->
+             registrationPage.submitButton());
+        step("Проверить текст ошибки", () ->
+             registrationPage.errorMassage(formErrorText));
     }
 
     @Test
-    @DisplayName("Проверка на валидацию только цифр в поле Mobile")
+    @DisplayName("Валидация на ввод только цифр в поле Mobile")
 
     void verifyMolileNumberValidationTest() {
-        registrationPage.openPage()
-                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle)
+        step("Открыть главную страницу", () ->
+            registrationPage.openPage());
+        step("Ввести данные в форму " + practiceFormTittle, () -> {
+            step("Проверить заголовки", () -> {
+            registrationPage
+                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle);});
+            registrationPage
                 .typeFirstName(testData.userName)
                 .typeLastName(testData.userLastName)
                 .setGender(testData.gender)
-                .typeUserNumberInput(testData.phoneInputWithLetters)
-                .submitButton()
-                .errorMassage(formErrorText);
+                .typeUserNumberInput(testData.phoneInputWithLetters);
+        });
+        step("Нажать кнопку submit", () ->
+            registrationPage.submitButton());
+        step("Проверить текст ошибки", () ->
+            registrationPage.errorMassage(formErrorText));
     }
 
     @Test
-    @DisplayName("Проверка на добавление спецсимволов в имя")
+    @DisplayName("Ввести спецсимволы в имя")
 
     void verifyNameSpecialCharactersTest() {
-        registrationPage.openPage()
-                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle)
+        step("Открыть главную страницу", () ->
+            registrationPage.openPage());
+        step("Ввести данные в форму " + practiceFormTittle, () -> {
+            step("Проверить заголовки", () -> {
+            registrationPage
+                .tittleAndSubtitlePageRegistrationForm(practiceFormTittle, registrationTittle);});
+            registrationPage
                 .typeFirstName(testData.userName + testData.specChars)
                 .typeLastName(testData.userLastName + testData.specChars)
                 .setGender(testData.gender)
-                .typeUserNumberInput(testData.userNumber)
-                .submitButton()
+                .typeUserNumberInput(testData.userNumber);
+        });
+        step("Нажать кнопку submit", () ->
+            registrationPage.submitButton());
+        step("Проверить результаты заполнения данных", () -> {
+            step("Проверить заголовки", () -> {
+            registrationPage
+                .checkTittleTableSubmittingForm(titleTableForm);});
+            registrationPage
                 .checkTittleTableSubmittingForm(titleTableForm)
                 .checkResult("Student Name", testData.userName + testData.specChars + " " + testData.userLastName + testData.specChars)
                 .checkResult("Student Email", "-")
@@ -148,8 +228,10 @@ public class  TestRegistrationForm extends TestBase {
                 .checkResult("Hobbies", "-")
                 .checkResult("Picture", "-")
                 .checkResult("Address", "-")
-                .checkResult("State and City", "-")
-                .closeModalButton();
+                .checkResult("State and City", "-");
+        });
+            step("Закрыть таблицу " + titleTableForm, () ->
+            registrationPage.closeModalButton());
     }
 
 }
