@@ -37,7 +37,7 @@ public class TestBase {
         chromeOptions.setCapability("selenoid:options", Map.of(
                 "enableVNC", true,
                 "enableVideo", true,
-                "screenResolution", "1080x1500"
+                "screenResolution", "1080x1300"
         ));
         Configuration.browserCapabilities = chromeOptions;
         Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
