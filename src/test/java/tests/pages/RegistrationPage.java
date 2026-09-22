@@ -1,6 +1,7 @@
 package tests.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import tests.pages.components.CalendarComponent;
 import tests.pages.components.RegistrationFormResultComponent;
 import static com.codeborne.selenide.Condition.text;
@@ -39,7 +40,7 @@ public class RegistrationPage {
     private final SelenideElement closeModal = $("#closeModal");
     private final SelenideElement validMassage = $("#formError");
 
-
+    @Step("Ввести имя \"{value}\"")
     public RegistrationPage typeFirstName(String value) {
         firstNameInput.setValue(value);
 
@@ -47,13 +48,15 @@ public class RegistrationPage {
 
     }
 
+    @Step("Ввести почту \"{value}\"")
     public RegistrationPage typeEmailInput(String value) {
         emailInput.setValue(value);
 
         return this;
     }
 
-      public RegistrationPage typeUserNumberInput(String value) {
+    @Step("Ввести телефон \"{value}\"")
+    public RegistrationPage typeUserNumberInput(String value) {
           userNumberInput.setValue(value);
 
         return this;
@@ -84,6 +87,7 @@ public class RegistrationPage {
         return this;
     }
 
+    @Step("Ввести фамилию \"{value}\"")
     public RegistrationPage typeLastName(String value) {
         lastNameInput.setValue(value);
 

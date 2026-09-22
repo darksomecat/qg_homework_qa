@@ -1,10 +1,12 @@
 package tests;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static tests.testdata.TittleAndSubtittleForms.*;
 
 public class  TestRegistrationForm extends TestBase {
 
+    @Feature("Регистрация полной формы")
     @Test
     @DisplayName("Заполнение полной формы")
     void registrationFormTest() {
