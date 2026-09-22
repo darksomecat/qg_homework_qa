@@ -6,10 +6,13 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.chrome.ChromeOptions;
 import tests.helpers.Attach;
 import tests.pages.RegistrationPage;
 import tests.pages.TextBoxPage;
 import tests.testdata.TestData;
+
+import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
@@ -27,10 +30,16 @@ public class TestBase {
         Configuration.browser = "Chrome";
         Configuration.baseUrl = "https://qa-guru.github.io/one-page-form";
         //Configuration.holdBrowserOpen = true;
-        Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
-        Configuration.browserVersion = System.getProperty("browserVersion", "148.0");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--disable-dev-shm-usage", "--no-sandbox", "--start-maximized");
+        chromeOptions.setCapability("se:cdpEnabled", false);
+        chromeOptions.setCapability("selenoid:options", Map.of(
+                "enableVNC", true,
+                "enableVideo", true,
+                "screenResolution", "1920x1500x24"
+        ));
+        Configuration.browserCapabilities = chromeOptions;
         Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
-        closeWebDriver();
     }
     @AfterEach
     void addAtachments() {
