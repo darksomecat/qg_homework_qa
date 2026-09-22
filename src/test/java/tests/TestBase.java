@@ -28,6 +28,7 @@ public class TestBase {
     @BeforeAll
        static void beforeAll(){
         Configuration.browser = "Chrome";
+        System.getProperty("browserSize", "1080x1500");
         Configuration.baseUrl = "https://qa-guru.github.io/one-page-form";
         //Configuration.holdBrowserOpen = true;
         ChromeOptions chromeOptions = new ChromeOptions();
@@ -36,7 +37,7 @@ public class TestBase {
         chromeOptions.setCapability("selenoid:options", Map.of(
                 "enableVNC", true,
                 "enableVideo", true,
-                "screenResolution", "1080x1920"
+                "screenResolution", "1080x1500"
         ));
         Configuration.browserCapabilities = chromeOptions;
         Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
