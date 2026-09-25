@@ -4,7 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selenide.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TextBoxPage {
 
@@ -60,9 +60,11 @@ public class TextBoxPage {
 
     public TextBoxPage checkValidationMessage(String value) {
         String validationMessage = executeJavaScript("return arguments[0].validationMessage;", $("[id=userEmail]"));
-        assertEquals(
-                "Адрес электронной почты должен содержать символ \"@\". В адресе \""+value+"\" отсутствует символ \"@\".",
-                validationMessage
+        String expectedRu = "Адрес электронной почты должен содержать символ \"@\". В адресе \"" + value + "\" отсутствует символ \"@\".";
+        String expectedEn = "Please include an '@' in the email address. '" + value + "' is missing an '@'.";
+
+        assertTrue(
+                validationMessage.equals(expectedRu) || validationMessage.equals(expectedEn)
         );
 
         return this;

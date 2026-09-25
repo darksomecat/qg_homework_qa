@@ -64,13 +64,12 @@ public class TestBase {
 
         if ("chrome".equalsIgnoreCase(Configuration.browser)) {
             ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments(List.of("--disable-dev-shm-usage", "--no-sandbox", "--lang=ru"));
+            chromeOptions.addArguments(List.of("--disable-dev-shm-usage", "--no-sandbox"));
             capabilities.merge(chromeOptions);
 
         } else if ("firefox".equalsIgnoreCase(Configuration.browser)) {
             FirefoxOptions firefoxOptions = new FirefoxOptions();
             firefoxOptions.setCapability("webSocketUrl", false);
-            firefoxOptions.addPreference("intl.accept_languages", "ru-RU, ru");
             capabilities.merge(firefoxOptions);
         }
 
