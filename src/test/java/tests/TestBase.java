@@ -69,6 +69,7 @@ public class TestBase {
 
         } else if ("firefox".equalsIgnoreCase(Configuration.browser)) {
             FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setCapability("webSocketUrl", false);
             capabilities.merge(firefoxOptions);
         }
 
