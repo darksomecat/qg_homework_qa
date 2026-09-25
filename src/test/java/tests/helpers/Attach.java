@@ -1,5 +1,6 @@
 package tests.helpers;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
@@ -11,7 +12,6 @@ import java.nio.charset.StandardCharsets;
 
 import static com.codeborne.selenide.Selenide.sessionId;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static org.openqa.selenium.logging.LogType.BROWSER;
 
 public class Attach {
     @Attachment(value = "{attachName}", type = "image/png")
@@ -28,9 +28,13 @@ public class Attach {
         return message;
     }
     public static void browserConsoleLogs(){
+        if ("firefox".equalsIgnoreCase(Configuration.browser)) {
+            return;
+        }
+
         attachAsText(
                 "Browser console logs",
-                String.join("\n", Selenide.getWebDriverLogs(BROWSER))
+                String.join("\n", Selenide.getWebDriverLogs("browser"))
         );
     }
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
