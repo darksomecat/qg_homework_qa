@@ -1,7 +1,7 @@
 package tests.testdata;
 
 import com.github.javafaker.Faker;
-import static Utils.GeneretedUtils.*;
+import static utils.GeneretedUtils.*;
 
 public class TestData {
     Faker faker = new Faker();

@@ -6,12 +6,15 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import tests.helpers.Attach;
 import tests.pages.RegistrationPage;
 import tests.pages.TextBoxPage;
 import tests.testdata.TestData;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
@@ -51,16 +54,23 @@ public class TestBase {
         System.out.println("browserVersion: " + Configuration.browserVersion);
         System.out.println("headless: " + Configuration.headless);
 
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--disable-dev-shm-usage", "--no-sandbox", "--start-maximized");
-        chromeOptions.setCapability("se:cdpEnabled", false);
-        chromeOptions.setCapability("selenoid:options", Map.of(
+        MutableCapabilities capabilities = new MutableCapabilities();
+        capabilities.setCapability("se:cdpEnabled", false);
+        capabilities.setCapability("selenoid:options", Map.of(
                 "enableVNC", true,
                 "enableVideo", true,
                 "screenResolution", "1080x1300"
         ));
 
-        Configuration.browserCapabilities = chromeOptions;
+        if ("chrome".equalsIgnoreCase(Configuration.browser)) {
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments(List.of("--disable-dev-shm-usage", "--no-sandbox"));
+            capabilities.merge(chromeOptions);
+
+        } else if ("firefox".equalsIgnoreCase(Configuration.browser)) {
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            capabilities.merge(firefoxOptions);
+        }
 
     }
     @AfterEach
